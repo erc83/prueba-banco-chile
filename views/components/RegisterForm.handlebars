@@ -1,0 +1,43 @@
+<form action="/users/register" method="POST">
+    <div>
+        <ul>
+            {{#each errors}}
+            <li> {{this.message}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="form-group">
+        <label for="formGroupExampleInput">Nombre completo</label>
+        <input type="text" class="form-control" id="name" name="name"
+            placeholder="Nombre completo" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email" required>
+        <small id="emailHelp" class="form-text text-muted">No compartiremos su correo</small>
+    </div>
+    <div class="form-group">
+        <label for="formGroupExampleInput">Rut</label>
+        <input type="text" class="form-control" id="rut" name="rut" placeholder="Ingrese su rut" required>
+    </div>
+    <div class="form-group">
+        <label for="formGroupExampleInput">Dirección</label>
+        <input type="text" class="form-control" id="address" name="address" placeholder="Ingrese su dirección"
+            required>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Ingrese su clave</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su clave"
+            required>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">confirme su clave</label>
+        <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirme su clave"
+            required>
+    </div>
+    <div>
+        <button type="submit" value="Register" class="btn btn-primary">Registrar</button>
+    </div>
+    <a href="/users/login">Ingresar</a>
+</form>

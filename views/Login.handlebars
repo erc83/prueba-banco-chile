@@ -1,0 +1,30 @@
+{{>Head}}
+
+<title>loguear</title>
+
+<body>
+    <div class="w-50 m-auto">
+        <h2> Banco Digital de Chile </h2>
+        <div class="row my-5 border rounded p-5">
+            <h6 class="text-center mb-5 col-12">Iniciar Sessión</h6>
+            <form action="/register" method="POST">
+                <div class="form-group">
+          <label for="formGroupExampleInput">Rut</label>
+          <input type="text" class="form-control" id="rut" name="rut" placeholder="Ingrese su rut" required>
+        </div>
+                <div class="form-group">
+                    <label for="exampleI1nputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                        required>
+                </div>
+                <div>
+                    <button type="submit" value="Login" class="btn btn-primary">Iniciar</button>
+                </div>
+                <a style="color:tomato" href="/users/register"> ¿No estas registrado? ingresa aqui</a>
+
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
