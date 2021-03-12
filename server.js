@@ -86,6 +86,37 @@ app.post('/users/register', async (req, res) => {
     }
 })
 
+app.post('/verify', async (req,res) => {
+  let { rut, password } = req.body;
+  console.log(req.body)
+  console.log(rut, password)
+  let user = await db.getUsuario( rut, password);
+  if (user) {
+    // if(user.auth){                   
+    if(user.rut == rut && user.password == password){     
+      const token = jwt.sign(
+        {
+          exp: Math.floor(Date.now() / 1000) + 180,
+          data: user,
+        },
+        process.env.SECRET_KEY
+      );
+      res.status(200).send(token);
+    }else {
+      res.status(401).send({
+        error: "Usuario no validado",
+        code: 401,
+      });
+    }
+  } else {
+    res.status(404).send({
+      error: "Usuario o contraseña incorrecto",
+      code: 404,
+    })
+  }
+});
+
+
   
   
 

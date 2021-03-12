@@ -27,15 +27,19 @@ async function nuevoUsuario(name, email, rut, address, password) {
   }
 }
 
-// const newUser = async (usuario) => {
-//   const account = Math.floor(Math.random() * (999999 - 0)) + 0;
-//   const result = await pool.query(
-//     `INSERT INTO usuarios (account, name, rut, email, address, password, amount) values ('${account}', $1, $2, $3, $4, $5,  100000) RETURNING *`,
-//     usuario
-//   );
-//   return result.rows[0];
-// };
+async function getUsuario( rut, password) {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM usuarios WHERE rut = '${rut}' AND password = '${password}'`
+    );
+    return result.rows[0];
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
 
 module.exports = {
   nuevoUsuario,
+  getUsuario,
 }
