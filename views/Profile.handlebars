@@ -47,26 +47,30 @@
             <span class="input-group-text d-flex justify-content-center" id="inputGroup-sizing-default"><i
                     class="fas fa-portrait"></i></span>
             <input type="text" class="form-control" placeholder="Confirme su clave" aria-label="Username"
-                value="7895356" disabled />
+                value="123321" disabled />
         </div>
     </div>
     <button type="button" class="btn btn-dark" onclick="updateProfile()">Modificar</button>
-
 </div>
+            <h1>{{user_id}}</h1>
+            <h1>{{name}}</h1>
 
+</body>
+
+    <script src="/axios/axios.min.js"></script>
 <script>
-
     const updateProfile = async () => {
-        const id = "{{user.id}}"
+        const id = {{user_id}}
         const name = document.getElementById("name").value
         const rut = document.getElementById("rut").value
         const email = document.getElementById("email").value
         const address = document.getElementById("address").value
-        const payload = { name, rut, email, address, }
+        const payload = { name, rut, email, address }
         try {
-            await axios.put(`/usuarios/${id}`, payload)
+            await axios.put(`/usuario/${id}`, payload)
             alert(`Datos modificados con éxito!`)
-            location.reload();
+            //location.reload();
+            window.location.href = "/users/login"
         } catch (e) {
             const { response } = e
             const { data } = response
@@ -77,12 +81,6 @@
         }
     }
 </script>
-
-
-
-    <h1>Perfil Usuario banco</h1>
-</body>
-
 
 </html>
 

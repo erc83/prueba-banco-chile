@@ -107,7 +107,7 @@ app.post('/verify', async (req,res) => {
     })
   }
 });
-//persistencia del token
+//persistencia del token dashboard sin tranferencia
 // app.get("/users/dashboard", function (req, res) {
 //   let { token } = req.query;
 //   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
@@ -194,15 +194,33 @@ app.post("/transferencias", (req, res) => {
 
 app.get("/users/dashboard/perfil", (req, res) => {
   const { token } = req.query;
-  jwt.verify(token, process.env.SECRET_KEY, (err, data) => {
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
       const { message } = err;
       res.status(401).send({ error: "401 Unauthorized", message });
     } else {
-      res.render( "Profile", { layout: "Profile", user: data, token})
+      res.render( "Profile", { 
+        layout: "Profile", 
+        user_id: decoded.data.id,
+        name: decoded.data.name, 
+        token})
     }
   });
 })
+//update Usuario completado
+app.put("/usuario/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(req.params)
+  const datos = Object.values(req.body);
+  console.log(datos)
+  try {
+    const result = await db.updateUser(datos, id);
+    res.status(201).send(result);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ error: "500 Internal Server Error", message: e });
+  }
+});
 
 app.get("*", (req, res) => {
   res.render("404", {layout: "404"})

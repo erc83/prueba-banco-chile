@@ -84,13 +84,24 @@ async function getTransfers(id) {
   }
 }
 
-
-
-
+async function updateUser(datos, id) {
+  try {
+    const result = await pool.query(
+      `UPDATE usuarios SET name = $1, rut = $2, email = $3, address = $4
+      WHERE id = ${id} RETURNING *`,
+      datos
+    );
+      return result.rows[0];
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
 
 module.exports = {
   nuevoUsuario,
   getUsuario,
   newTransfer,
   getTransfers,
+  updateUser,
 }
