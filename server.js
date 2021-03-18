@@ -108,24 +108,64 @@ app.post('/verify', async (req,res) => {
   }
 });
 //persistencia del token
-app.get("/users/dashboard", function (req, res) {
+// app.get("/users/dashboard", function (req, res) {
+//   let { token } = req.query;
+//   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+//     err
+//       ? res.status(401).send(
+//           res.send({
+//             error: "401 No autorizado",
+//             message: "Usted no esta autorizado para estar aqui",
+//             token_error: err.message,
+//           })
+//       )
+//       :res.render( "Dashboard", { 
+//         layout: "Dashboard",
+//         nombre: decoded.data.name,
+//         token: token,
+//       });    
+//   });
+// });
+
+//get transfers con persistencia
+app.get("/users/dashboard", (req, res) => {
   let { token } = req.query;
-  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-    err
-      ? res.status(401).send(
-          res.send({
-            error: "401 No autorizado",
-            message: "Usted no esta autorizado para estar aqui",
-            token_error: err.message,
-          })
+  jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+    if(err){
+      res.status(401).send(
+        res.send({
+          error: "401 No autorizado",
+          message: "Usted no esta autorizado para estar aqui",
+          token_error: err.message,
+        })
       )
-      :res.render( "Dashboard", { 
-        layout: "Dashboard",
-        nombre: decoded.data.name,
-        token: token,
-      });    
+    }else{
+      let transfers;
+      try {
+        const id = decoded.data.id;
+        transfers = await db.getTransfers(id);
+        res.render( "Dashboard", { 
+          layout: "Dashboard",
+          user: decoded,
+          nombre: decoded.data.name,
+          token: token,
+          transfers,
+        })
+      } catch (e) {
+        console.log(e);
+        res.status(500).send({error: "500 Internal Server Error", message: e });
+      }
+    }    
   });
 });
+
+
+
+
+
+
+
+
 
 app.get("/users/dashboard/transferencia", (req, res) => {
   const { token } = req.query;

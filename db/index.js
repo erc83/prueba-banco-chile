@@ -69,7 +69,20 @@ async function newTransfer({name, email, rut, comment, amount}, id_from) {
   }
 }
 
-
+async function getTransfers(id) {
+  try {
+    const result = await pool.query(
+      `SELECT trs.id, date, id_from, name, comment, trs.amount
+      FROM transferencias as trs inner join usuarios as u on trs.id_to = u.id
+      WHERE trs.id_from = $1`,
+      [id]
+    );
+    return result.rows;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
 
 
 
@@ -79,4 +92,5 @@ module.exports = {
   nuevoUsuario,
   getUsuario,
   newTransfer,
+  getTransfers,
 }
