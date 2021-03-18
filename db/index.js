@@ -39,7 +39,44 @@ async function getUsuario( rut, password) {
   }
 }
 
+async function newTransfer({name, email, rut, comment, amount}, id_from) {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM usuarios WHERE name = '${name}' AND email = '${email}' AND rut = '${rut}'`
+    );
+      const destinatario = result.rows[0];
+      const {id: id_to} = destinatario;
+      await pool.query(`BEGIN`);
+      await pool.query(
+        `UPDATE usuarios SET balance = balance + ${Number(
+          amount
+        )} WHERE id = ${id_to}`
+      );
+      await pool.query(
+        `UPDATE usuarios SET balance = balance -${Number(
+          amount
+        )} WHERE id = ${id_from}` 
+      );
+      await pool.query(
+        `INSERT INTO transferencias (id_from, date, id_to, comment, amount)
+         VALUES ($1, NOW(), $2, $3, $4)`,
+         [id_from, id_to, comment, amount]
+      );
+      await pool.query(`COMMIT`);
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+
+
+
+
+
+
 module.exports = {
   nuevoUsuario,
   getUsuario,
+  newTransfer,
 }

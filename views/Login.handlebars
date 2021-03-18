@@ -34,15 +34,12 @@
         let payload = { rut, password }
         axios.post('/verify', payload).then(data => {
             const token = data.data
-            console.log(token)
+            console.log(data.data)
             alert(`Autenticado con exito!`)
             sessionStorage.setItem('token', JSON.stringify(token))
             window.location.href = `/users/dashboard?token=${token}`
         }).catch(({ response }) => alert(response.data.error))
     }
 </script>
-
-
-
 
 </html>
