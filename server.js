@@ -146,7 +146,6 @@ app.get("/users/dashboard", (req, res) => {
         transfers = await db.getTransfers(id);
         res.render( "Dashboard", { 
           layout: "Dashboard",
-          user: decoded,
           nombre: decoded.data.name,
           token: token,
           transfers,
@@ -158,14 +157,6 @@ app.get("/users/dashboard", (req, res) => {
     }    
   });
 });
-
-
-
-
-
-
-
-
 
 app.get("/users/dashboard/transferencia", (req, res) => {
   const { token } = req.query;
