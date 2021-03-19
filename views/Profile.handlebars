@@ -20,20 +20,20 @@
             <span class="input-group-text d-flex justify-content-center" id="inputGroup-sizing-default"><i
                     class="fas fa-user-circle"></i></span>
             <input type="text" class="form-control" placeholder="Ingrese su nombre completo" aria-label="Username"
-                value="Jason Statham" id="name" />
+                value="{{user_name}}" id="name" />
         </div>
 
         <div class="input-group mb-3">
             <span class="input-group-text d-flex justify-content-center" id="inputGroup-sizing-default"><i
                     class="fas fa-envelope"></i></span>
             <input type="text" class="form-control" placeholder="Ingrese su correo" aria-label="Username"
-                value="jasonstatham@gmail.com" id="email" />
+                value="{{user_email}}" id="email" />
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text d-flex justify-content-center" id="inputGroup-sizing-default"><i
                     class="fas fa-id-card"></i></span>
             <input type="text" class="form-control" placeholder="Ingrese su RUT" aria-label="Username"
-                value="12.456.789-3" id="rut" />
+                value="{{user_rut}}" id="rut" />
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text d-flex justify-content-center" id="inputGroup-sizing-default">
@@ -41,19 +41,17 @@
 
             </span>
             <input type="text" class="form-control" placeholder="Ingrese su dirección" aria-label="Username"
-                value="Providencia, Santiago" id="address" />
+                value="{{user_address}}" id="address" />
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text d-flex justify-content-center" id="inputGroup-sizing-default"><i
                     class="fas fa-portrait"></i></span>
-            <input type="text" class="form-control" placeholder="Confirme su clave" aria-label="Username"
-                value="123321" disabled />
+            <input type="password" class="form-control" placeholder="Confirme su clave" aria-label="Username"
+                value="{{user_password}}" disabled />
         </div>
     </div>
     <button type="button" class="btn btn-dark" onclick="updateProfile()">Modificar</button>
 </div>
-            <h1>{{user_id}}</h1>
-            <h1>{{name}}</h1>
 
 </body>
 

@@ -7,14 +7,31 @@
                 aria-controls="v-pills-profile" aria-selected="false">Nueva Tranferencia</a>
             <a class="nav-link {{activePerfil}}" id="v-pills-messages-tab" data-toggle="pill" href="#" onclick= "update()" role="tab"
                 aria-controls="v-pills-messages" aria-selected="false">Perfil</a>
+            <p>
+            <a href="#" onclick="deleteUser()" class="text-danger">Eliminar cuenta</a>
+            </p>
         </div>
     </div>    
 </nav>
+
 
 <script>
     const token = "{{token}}"
     const cartola = () => window.location = `/users/dashboard?token=${token}`
     const newTransfer = () => window.location = `/users/dashboard/transferencia?token=${token}`
     const update = () => window.location = `/users/dashboard/perfil?token=${token}`
-  
+    
+    const deleteUser = async () => {
+        const id = "{{id_del}}"
+        try {
+            await axios.delete(`/usuario/${id}`)
+
+            alert("Usuario eliminado de la base de datos")
+            window.location = `/`
+        } catch (e) {
+            const { response } = e
+            const { data: message } = response
+            alert(message)
+        }
+    }
 </script>

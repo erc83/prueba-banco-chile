@@ -147,6 +147,9 @@ app.get("/users/dashboard", (req, res) => {
         res.render( "Dashboard", { 
           layout: "Dashboard",
           nombre: decoded.data.name,
+          id_del: decoded.data.id, 
+          account: decoded.data.account,
+          balance: decoded.data.balance,
           token: token,
           transfers,
         })
@@ -165,7 +168,10 @@ app.get("/users/dashboard/transferencia", (req, res) => {
       const { message } = err;
       res.status(401).send({ error: "401 Unauthorized", message });
     } else {
-      res.render( "Transfer", { layout: "Transfer", user: data, token})
+      res.render( "Transfer", { 
+        layout: "Transfer", 
+        user: data, 
+        token})
     }
   });
 })
@@ -201,8 +207,11 @@ app.get("/users/dashboard/perfil", (req, res) => {
     } else {
       res.render( "Profile", { 
         layout: "Profile", 
-        user_id: decoded.data.id,
-        name: decoded.data.name, 
+        user_password: decoded.data.password,
+        user_email: decoded.data.email,
+        user_rut: decoded.data.rut,
+        user_address: decoded.data.address,
+        user_name: decoded.data.name, 
         token})
     }
   });
@@ -221,6 +230,20 @@ app.put("/usuario/:id", async (req, res) => {
     res.status(500).send({ error: "500 Internal Server Error", message: e });
   }
 });
+
+app.delete("/usuario/:id", async (req,res) => {
+  const {id} = req.params;
+  try {
+    const rowCount = await db.deleteUser(id);
+    if(rowCount == 0) throw "No existe un usuario con este id";
+    res.status(200).send();
+    
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ error: "500 Internal Server Error", message: e});
+    
+  }
+})
 
 app.get("*", (req, res) => {
   res.render("404", {layout: "404"})

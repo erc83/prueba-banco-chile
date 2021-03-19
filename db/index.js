@@ -98,10 +98,19 @@ async function updateUser(datos, id) {
   }
 }
 
+async function deleteUser(id){
+  const result = await pool.query(
+    `DELETE FROM usuarios WHERE id = $1  RETURNING *`,
+    [id]
+  );
+  return result.rowCount;
+};
+
 module.exports = {
   nuevoUsuario,
   getUsuario,
   newTransfer,
   getTransfers,
   updateUser,
+  deleteUser,
 }
